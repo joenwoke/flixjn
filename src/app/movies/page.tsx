@@ -1,5 +1,6 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import { deleteMovie } from "./actions";
 
 export default async function MoviesPage() {
   const movies = await prisma.movie.findMany({
@@ -32,6 +33,14 @@ export default async function MoviesPage() {
                 <p className="text-zinc-700">
                   Release Year: {movie.releaseYear}
                 </p>
+                <form action={deleteMovie.bind(null, movie.id)} className="mt-4">
+                  <button
+                    type="submit"
+                    className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                </form>
               </div>
             ))}
           </div>
