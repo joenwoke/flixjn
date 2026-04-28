@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createMovie } from "./actions";
 
 export default function NewMoviePage() {
   return (
@@ -8,7 +9,10 @@ export default function NewMoviePage() {
           Add Movie
         </h1>
 
-        <form className="mt-8 space-y-5 rounded-md border border-zinc-200 bg-white p-6 shadow-sm">
+        <form
+          action={createMovie}
+          className="mt-8 space-y-5 rounded-md border border-zinc-200 bg-white p-6 shadow-sm"
+        >
           <div>
             <label
               htmlFor="title"
@@ -20,6 +24,7 @@ export default function NewMoviePage() {
               id="title"
               name="title"
               type="text"
+              required
               className="mt-2 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-900"
             />
           </div>
@@ -35,6 +40,7 @@ export default function NewMoviePage() {
               id="director"
               name="director"
               type="text"
+              required
               className="mt-2 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-900"
             />
           </div>
@@ -50,6 +56,7 @@ export default function NewMoviePage() {
               id="genre"
               name="genre"
               type="text"
+              required
               className="mt-2 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-900"
             />
           </div>
@@ -65,6 +72,7 @@ export default function NewMoviePage() {
               id="releaseYear"
               name="releaseYear"
               type="number"
+              required
               className="mt-2 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-900"
             />
           </div>
