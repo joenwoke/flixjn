@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 
+// Action to update an existing movie in the database
 export async function updateMovie(id: number, formData: FormData) {
   const title = formData.get("title")?.toString() || "";
   const director = formData.get("director")?.toString() || "";
