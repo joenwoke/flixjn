@@ -33,14 +33,22 @@ export default async function MoviesPage() {
                 <p className="text-zinc-700">
                   Release Year: {movie.releaseYear}
                 </p>
-                <form action={deleteMovie.bind(null, movie.id)} className="mt-4">
-                  <button
-                    type="submit"
-                    className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+                <div className="mt-4 flex gap-3">
+                  <Link
+                    href={`/movies/${movie.id}/edit`}
+                    className="rounded-md bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700"
                   >
-                    Delete
-                  </button>
-                </form>
+                    Edit
+                  </Link>
+                  <form action={deleteMovie.bind(null, movie.id)}>
+                    <button
+                      type="submit"
+                      className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
               </div>
             ))}
           </div>
