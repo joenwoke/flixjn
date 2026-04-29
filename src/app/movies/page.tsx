@@ -2,8 +2,27 @@ import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { deleteMovie } from "./actions";
 
-export default async function MoviesPage() {
+type MoviesPageProps = {
+  searchParams: Promise<{
+    q?: string;
+  }>;
+};
+
+// Server component to display the list of movies with search
+export default async function MoviesPage({ searchParams }: MoviesPageProps) {
+  const { q } = await searchParams;
+  const searchText = q?.trim() || "";
+
+  // Fetch movies from the DB with optional search filter - block rewritten by Codex
   const movies = await prisma.movie.findMany({
+    where: searchText
+      ? {
+          title: {
+            contains: searchText,
+            mode: "insensitive",
+          },
+        }
+      : undefined,
     orderBy: {
       title: "asc",
     },
@@ -13,6 +32,22 @@ export default async function MoviesPage() {
     <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
       <div className="flex w-full max-w-3xl flex-col items-center gap-6">
         <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
+
+        <form action="/movies" className="flex w-full gap-3">
+          <input
+            type="search"
+            name="q"
+            defaultValue={searchText}
+            placeholder="Search by title"
+            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          />
+          <button
+            type="submit"
+            className="rounded-md bg-zinc-900 px-5 py-2 font-medium text-white hover:bg-zinc-700"
+          >
+            Search
+          </button>
+        </form>
 
         {movies.length === 0 ? (
           <p className="text-lg text-zinc-700">No movies found</p>
