@@ -5,22 +5,38 @@ import { deleteMovie } from "./actions";
 type MoviesPageProps = {
   searchParams: Promise<{
     q?: string;
+    genre?: string;
   }>;
 };
 
 // Server component to display the list of movies with search
 export default async function MoviesPage({ searchParams }: MoviesPageProps) {
-  const { q } = await searchParams;
+  const { q, genre } = await searchParams;
   const searchText = q?.trim() || "";
+  const genreText = genre?.trim() || "";
 
   // Fetch movies from the DB with optional search filter - block rewritten by Codex
   const movies = await prisma.movie.findMany({
-    where: searchText
+    where: searchText || genreText
       ? {
-          title: {
-            contains: searchText,
-            mode: "insensitive",
-          },
+          AND: [
+            searchText
+              ? {
+                  title: {
+                    contains: searchText,
+                    mode: "insensitive",
+                  },
+                }
+              : {},
+            genreText
+              ? {
+                  genre: {
+                    contains: genreText,
+                    mode: "insensitive",
+                  },
+                }
+              : {},
+          ],
         }
       : undefined,
     orderBy: {
@@ -33,12 +49,19 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
       <div className="flex w-full max-w-3xl flex-col items-center gap-6">
         <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
 
-        <form action="/movies" className="flex w-full gap-3">
+        <form action="/movies" className="flex w-full flex-col gap-3 sm:flex-row">
           <input
             type="search"
             name="q"
             defaultValue={searchText}
             placeholder="Search by title"
+            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          />
+          <input
+            type="search"
+            name="genre"
+            defaultValue={genreText}
+            placeholder="Filter by genre"
             className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
           />
           <button
