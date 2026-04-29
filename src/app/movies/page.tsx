@@ -103,15 +103,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
           </form>
 
           {movies.length === 0 ? (
-            <div className="flex flex-col items-center gap-4 text-center">
-              <p className="text-lg text-zinc-700">No movies found</p>
-              <Link
-                href="/movies/new"
-                className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
-              >
-                Add your first movie
-              </Link>
-            </div>
+            <p className="text-lg text-zinc-700">No movies found</p>
           ) : (
             <div className="w-full space-y-4">
               {movies.map((movie) => (
