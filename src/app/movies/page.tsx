@@ -49,6 +49,13 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
       <div className="flex w-full max-w-3xl flex-col items-center gap-6">
         <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
 
+        <Link
+          href="/movies/new"
+          className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
+        >
+          Add Movie
+        </Link>
+
         <form action="/movies" className="flex w-full flex-col gap-3 sm:flex-row">
           <input
             type="search"
