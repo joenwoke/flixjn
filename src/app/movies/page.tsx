@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import prisma from "@/lib/prisma";
 import { deleteMovie } from "./actions";
 
@@ -45,87 +46,112 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
-      <div className="flex w-full max-w-3xl flex-col items-center gap-6">
-        <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
+    <>
+      <Script id="confirm-delete-movie" strategy="afterInteractive">
+        {`
+          document.addEventListener("submit", function (event) {
+            const form = event.target;
 
-        <Link
-          href="/movies/new"
-          className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
-        >
-          Add Movie
-        </Link>
+            if (!(form instanceof HTMLFormElement)) {
+              return;
+            }
 
-        <form action="/movies" className="flex w-full flex-col gap-3 sm:flex-row">
-          <input
-            type="search"
-            name="q"
-            defaultValue={searchText}
-            placeholder="Search by title"
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
-          />
-          <input
-            type="search"
-            name="genre"
-            defaultValue={genreText}
-            placeholder="Filter by genre"
-            className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
-          />
-          <button
-            type="submit"
-            className="rounded-md bg-zinc-900 px-5 py-2 font-medium text-white hover:bg-zinc-700"
+            if (form.dataset.confirmDelete !== "true") {
+              return;
+            }
+
+            if (!window.confirm("Are you sure you want to delete this movie?")) {
+              event.preventDefault();
+            }
+          });
+        `}
+      </Script>
+
+      <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
+        <div className="flex w-full max-w-3xl flex-col items-center gap-6">
+          <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
+
+          <Link
+            href="/movies/new"
+            className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
           >
-            Search
-          </button>
-        </form>
+            Add Movie
+          </Link>
 
-        {movies.length === 0 ? (
-          <p className="text-lg text-zinc-700">No movies found</p>
-        ) : (
-          <div className="w-full space-y-4">
-            {movies.map((movie) => (
-              <div
-                key={movie.id}
-                className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm"
-              >
-                <h2 className="text-2xl font-semibold text-zinc-900">
-                  {movie.title}
-                </h2>
-                <p className="mt-2 text-zinc-700">
-                  Director: {movie.director}
-                </p>
-                <p className="text-zinc-700">Genre: {movie.genre}</p>
-                <p className="text-zinc-700">
-                  Release Year: {movie.releaseYear}
-                </p>
-                <div className="mt-4 flex gap-3">
-                  <Link
-                    href={`/movies/${movie.id}/edit`}
-                    className="rounded-md bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700"
-                  >
-                    Edit
-                  </Link>
-                  <form action={deleteMovie.bind(null, movie.id)}>
-                    <button
-                      type="submit"
-                      className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+          <form action="/movies" className="flex w-full flex-col gap-3 sm:flex-row">
+            <input
+              type="search"
+              name="q"
+              defaultValue={searchText}
+              placeholder="Search by title"
+              className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            />
+            <input
+              type="search"
+              name="genre"
+              defaultValue={genreText}
+              placeholder="Filter by genre"
+              className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            />
+            <button
+              type="submit"
+              className="rounded-md bg-zinc-900 px-5 py-2 font-medium text-white hover:bg-zinc-700"
+            >
+              Search
+            </button>
+          </form>
+
+          {movies.length === 0 ? (
+            <p className="text-lg text-zinc-700">No movies found</p>
+          ) : (
+            <div className="w-full space-y-4">
+              {movies.map((movie) => (
+                <div
+                  key={movie.id}
+                  className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm"
+                >
+                  <h2 className="text-2xl font-semibold text-zinc-900">
+                    {movie.title}
+                  </h2>
+                  <p className="mt-2 text-zinc-700">
+                    Director: {movie.director}
+                  </p>
+                  <p className="text-zinc-700">Genre: {movie.genre}</p>
+                  <p className="text-zinc-700">
+                    Release Year: {movie.releaseYear}
+                  </p>
+                  <div className="mt-4 flex gap-3">
+                    <Link
+                      href={`/movies/${movie.id}/edit`}
+                      className="rounded-md bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700"
                     >
-                      Delete
-                    </button>
-                  </form>
+                      Edit
+                    </Link>
+                    <form
+                      action={deleteMovie.bind(null, movie.id)}
+                      data-confirm-delete="true"
+                    >
+                      <button
+                        type="submit"
+                        className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
 
-        <Link
-          href="/"
-          className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
-        >
-          Back Home
-        </Link>
-      </div>
-    </main>
+          <Link
+            href="/"
+            className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
+          >
+            Back Home
+          </Link>
+        </div>
+      </main>
+    </>
   );
 }
