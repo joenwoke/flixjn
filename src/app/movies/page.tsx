@@ -62,8 +62,9 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
 
             if (!window.confirm("Are you sure you want to delete this movie?")) {
               event.preventDefault();
+              event.stopImmediatePropagation();
             }
-          });
+          }, true);
         `}
       </Script>
 
