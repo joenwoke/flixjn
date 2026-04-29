@@ -43,5 +43,5 @@ export async function updateMovie(id: number, formData: FormData) {
   });
 
   revalidatePath("/movies");
-  redirect("/movies");
+  redirect("/movies?success=1");
 }

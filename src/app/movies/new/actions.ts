@@ -39,5 +39,5 @@ export async function createMovie(formData: FormData) {
   });
 
   revalidatePath("/movies");
-  redirect("/movies");
+  redirect("/movies?success=1");
 }

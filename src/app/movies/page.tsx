@@ -7,14 +7,16 @@ type MoviesPageProps = {
   searchParams: Promise<{
     q?: string;
     genre?: string;
+    success?: string;
   }>;
 };
 
 // Server component to display the list of movies with search
 export default async function MoviesPage({ searchParams }: MoviesPageProps) {
-  const { q, genre } = await searchParams;
+  const { q, genre, success } = await searchParams;
   const searchText = q?.trim() || "";
   const genreText = genre?.trim() || "";
+  const showSuccessMessage = success === "1";
 
   // Fetch movies from the DB with optional search filter - block rewritten by Codex
   const movies = await prisma.movie.findMany({
@@ -71,6 +73,12 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
       <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
         <div className="flex w-full max-w-3xl flex-col items-center gap-6">
           <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
+
+          {showSuccessMessage && (
+            <p className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700">
+              Movie saved successfully
+            </p>
+          )}
 
           <Link
             href="/movies/new"
