@@ -167,7 +167,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
                     >
                       {movie.watched ? "Watched" : "Not Watched"}
                     </span>
-                    <span className="inline-block rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white">
+                    <span className="inline-block rounded-full bg-blue-600 px-3 py-1 text-sm font-medium text-white">
                       {movie.rating ? `Rated ${movie.rating}/10` : "Not Rated"}
                     </span>
                   </div>
