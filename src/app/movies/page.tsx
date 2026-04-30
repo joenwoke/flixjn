@@ -76,12 +76,18 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
               const message = document.getElementById("success-message");
 
               if (message) {
-                message.remove();
+                message.classList.add("opacity-0");
               }
 
               const url = new URL(window.location.href);
               url.searchParams.delete("success");
               window.history.replaceState({}, "", url);
+
+              window.setTimeout(function () {
+                if (message) {
+                  message.remove();
+                }
+              }, 500);
             }, 3000);
           `}
         </Script>
@@ -94,7 +100,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
           {showSuccessMessage && (
             <p
               id="success-message"
-              className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700"
+              className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700 opacity-100 transition-opacity duration-500"
             >
               Movie saved successfully
             </p>
