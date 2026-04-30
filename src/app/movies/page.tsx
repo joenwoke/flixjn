@@ -69,13 +69,33 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
           }, true);
         `}
       </Script>
+      {showSuccessMessage && (
+        <Script id="hide-success-message" strategy="afterInteractive">
+          {`
+            window.setTimeout(function () {
+              const message = document.getElementById("success-message");
+
+              if (message) {
+                message.remove();
+              }
+
+              const url = new URL(window.location.href);
+              url.searchParams.delete("success");
+              window.history.replaceState({}, "", url);
+            }, 3000);
+          `}
+        </Script>
+      )}
 
       <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
         <div className="flex w-full max-w-3xl flex-col items-center gap-6">
           <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
 
           {showSuccessMessage && (
-            <p className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700">
+            <p
+              id="success-message"
+              className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700"
+            >
               Movie saved successfully
             </p>
           )}
