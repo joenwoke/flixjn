@@ -54,6 +54,13 @@ This project is deployed on Vercel. The production database is hosted with Neon 
 
 ## AI Usage
 
-Codex was used for debugging, improving small code blocks, and explaining errors. I reviewed and tested any changes made by Codex before committing it.
+AI was used for:
+- Explaining Next.js App Router concepts
+- Debugging Prisma and Neon Postgres connection issues
+- Improving UI design and styling with Tailwind CSS
 
-Some of the main challenges during development involved working with Prisma 7, configuring the Neon adapter, and getting the Vercel deployment connected correctly to the hosted Neon Postgres database.
+Challenges I faced included:
+- Configuring Prisma with Neon Postgres
+- Understanding server actions vs API routes
+- Handling form data validation properly
+- Ensing deployment worked correctly on Vercel
