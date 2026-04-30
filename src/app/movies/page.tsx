@@ -93,14 +93,14 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
         </Script>
       )}
 
-      <main className="flex min-h-screen flex-col items-center bg-zinc-100 px-6 py-16">
+      <main className="flex min-h-screen flex-col items-center bg-gradient-to-br from-zinc-950 via-zinc-900 to-red-950 px-6 py-16">
         <div className="flex w-full max-w-3xl flex-col items-center gap-6">
-          <h1 className="text-5xl font-bold text-zinc-900">Movies</h1>
+          <h1 className="text-5xl font-bold text-white">Movies</h1>
 
           {showSuccessMessage && (
             <p
               id="success-message"
-              className="w-full rounded-md border border-green-200 bg-green-50 px-4 py-3 text-center font-medium text-green-700 opacity-100 transition-opacity duration-500"
+              className="w-full rounded-md border border-emerald-500/40 bg-emerald-950/70 px-4 py-3 text-center font-medium text-emerald-200 opacity-100 transition-opacity duration-500"
             >
               Movie saved successfully
             </p>
@@ -108,7 +108,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
 
           <Link
             href="/movies/new"
-            className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
+            className="rounded-md bg-red-600 px-5 py-3 font-medium text-white shadow-lg shadow-red-950/40 hover:bg-red-500"
           >
             Add Movie
           </Link>
@@ -119,46 +119,48 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
               name="q"
               defaultValue={searchText}
               placeholder="Search by title"
-              className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+              className="w-full rounded-md border border-zinc-700 bg-zinc-950/80 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-red-500 focus:outline-none"
             />
             <input
               type="search"
               name="genre"
               defaultValue={genreText}
               placeholder="Filter by genre"
-              className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+              className="w-full rounded-md border border-zinc-700 bg-zinc-950/80 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-red-500 focus:outline-none"
             />
             <button
               type="submit"
-              className="rounded-md bg-zinc-900 px-5 py-2 font-medium text-white hover:bg-zinc-700"
+              className="rounded-md bg-red-600 px-5 py-2 font-medium text-white hover:bg-red-500"
             >
               Search
             </button>
           </form>
 
           {movies.length === 0 ? (
-            <p className="text-lg text-zinc-700">No movies found</p>
+            <p className="rounded-md border border-zinc-800 bg-zinc-950/70 px-5 py-4 text-lg text-zinc-300">
+              No movies found
+            </p>
           ) : (
             <div className="w-full space-y-4">
               {movies.map((movie) => (
                 <div
                   key={movie.id}
-                  className="rounded-md border border-zinc-200 bg-white p-5 shadow-sm"
+                  className="rounded-md border border-zinc-800 bg-zinc-950/75 p-5 shadow-lg shadow-red-950/20"
                 >
-                  <h2 className="text-2xl font-semibold text-zinc-900">
+                  <h2 className="text-2xl font-semibold text-white">
                     {movie.title}
                   </h2>
-                  <p className="mt-2 text-zinc-700">
+                  <p className="mt-2 text-zinc-300">
                     Director: {movie.director}
                   </p>
-                  <p className="text-zinc-700">Genre: {movie.genre}</p>
-                  <p className="text-zinc-700">
+                  <p className="text-zinc-300">Genre: {movie.genre}</p>
+                  <p className="text-zinc-300">
                     Release Year: {movie.releaseYear}
                   </p>
                   <div className="mt-4 flex gap-3">
                     <Link
                       href={`/movies/${movie.id}/edit`}
-                      className="rounded-md bg-zinc-900 px-4 py-2 font-medium text-white hover:bg-zinc-700"
+                      className="rounded-md bg-zinc-800 px-4 py-2 font-medium text-white hover:bg-zinc-700"
                     >
                       Edit
                     </Link>
@@ -168,7 +170,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
                     >
                       <button
                         type="submit"
-                        className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
+                        className="rounded-md bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-500"
                       >
                         Delete
                       </button>
@@ -181,7 +183,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
 
           <Link
             href="/"
-            className="rounded-md bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-700"
+            className="rounded-md border border-zinc-700 bg-zinc-900 px-5 py-3 font-medium text-white hover:bg-zinc-800"
           >
             Back Home
           </Link>
