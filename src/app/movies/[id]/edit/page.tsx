@@ -115,16 +115,24 @@ export default async function EditMoviePage({ params }: EditMoviePageProps) {
             >
               Rate out of 10
             </label>
-            <input
+            <select
               id="rating"
               name="rating"
-              type="number"
-              min="1"
-              max="10"
-              placeholder="1-10"
               defaultValue={movie.rating ?? ""}
               className="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white focus:border-red-500 focus:outline-none"
-            />
+            >
+              <option value="">No rating</option>
+              <option value="1">1/10</option>
+              <option value="2">2/10</option>
+              <option value="3">3/10</option>
+              <option value="4">4/10</option>
+              <option value="5">5/10</option>
+              <option value="6">6/10</option>
+              <option value="7">7/10</option>
+              <option value="8">8/10</option>
+              <option value="9">9/10</option>
+              <option value="10">10/10</option>
+            </select>
           </div>
 
           <div className="flex items-center gap-3">
