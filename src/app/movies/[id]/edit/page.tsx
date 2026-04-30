@@ -113,12 +113,15 @@ export default async function EditMoviePage({ params }: EditMoviePageProps) {
               htmlFor="rating"
               className="block text-sm font-medium text-zinc-300"
             >
-              Rating
+              Rate out of 10
             </label>
             <input
               id="rating"
               name="rating"
               type="number"
+              min="1"
+              max="10"
+              placeholder="1-10"
               defaultValue={movie.rating ?? ""}
               className="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-white focus:border-red-500 focus:outline-none"
             />
