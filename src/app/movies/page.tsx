@@ -145,7 +145,7 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
               {movies.map((movie) => (
                 <div
                   key={movie.id}
-                  className="rounded-md border border-zinc-800 bg-zinc-950/75 p-5 shadow-lg shadow-red-950/20"
+                  className="rounded-md border border-zinc-800 bg-zinc-950/75 p-5 shadow-lg shadow-red-950/20 transition duration-200 hover:scale-[1.02] hover:border-red-500/50 hover:shadow-red-900/40"
                 >
                   <h2 className="text-2xl font-semibold text-white">
                     {movie.title}
