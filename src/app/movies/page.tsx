@@ -157,15 +157,20 @@ export default async function MoviesPage({ searchParams }: MoviesPageProps) {
                   <p className="text-zinc-300">
                     Release Year: {movie.releaseYear}
                   </p>
-                  <span
-                    className={
-                      movie.watched
-                        ? "mt-3 inline-block rounded-full bg-green-600 px-3 py-1 text-sm font-medium text-white"
-                        : "mt-3 inline-block rounded-full bg-zinc-700 px-3 py-1 text-sm font-medium text-zinc-200"
-                    }
-                  >
-                    {movie.watched ? "Watched" : "Not Watched"}
-                  </span>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span
+                      className={
+                        movie.watched
+                          ? "inline-block rounded-full bg-green-600 px-3 py-1 text-sm font-medium text-white"
+                          : "inline-block rounded-full bg-zinc-700 px-3 py-1 text-sm font-medium text-zinc-200"
+                      }
+                    >
+                      {movie.watched ? "Watched" : "Not Watched"}
+                    </span>
+                    <span className="inline-block rounded-full bg-red-600 px-3 py-1 text-sm font-medium text-white">
+                      {movie.rating ? `Rated ${movie.rating}/10` : "Not Rated"}
+                    </span>
+                  </div>
                   <div className="mt-4 flex gap-3">
                     <Link
                       href={`/movies/${movie.id}/edit`}
